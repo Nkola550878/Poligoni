@@ -41,14 +41,14 @@
             this.tbYInput.Location = new System.Drawing.Point(688, 12);
             this.tbYInput.Name = "tbYInput";
             this.tbYInput.Size = new System.Drawing.Size(100, 20);
-            this.tbYInput.TabIndex = 0;
+            this.tbYInput.TabIndex = 1;
             // 
             // tbXInput
             // 
             this.tbXInput.Location = new System.Drawing.Point(582, 12);
             this.tbXInput.Name = "tbXInput";
             this.tbXInput.Size = new System.Drawing.Size(100, 20);
-            this.tbXInput.TabIndex = 1;
+            this.tbXInput.TabIndex = 0;
             // 
             // btnAddPoint
             // 
@@ -65,7 +65,7 @@
             this.btnSave.Location = new System.Drawing.Point(713, 415);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 3;
+            this.btnSave.TabIndex = 5;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -85,7 +85,7 @@
             this.tbFolder.Location = new System.Drawing.Point(607, 388);
             this.tbFolder.Name = "tbFolder";
             this.tbFolder.Size = new System.Drawing.Size(100, 20);
-            this.tbFolder.TabIndex = 5;
+            this.tbFolder.TabIndex = 3;
             // 
             // Form1
             // 

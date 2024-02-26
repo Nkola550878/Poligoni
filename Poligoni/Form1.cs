@@ -36,7 +36,7 @@ namespace Poligoni
                 MessageBox.Show("Nije moguce da folder nema ime");
                 return;
             }
-            StreamWriter sw = new StreamWriter(folder);
+            StreamWriter sw = new StreamWriter($"{folder}.txt");
             foreach (Point p in points)
             {
                 sw.WriteLine(p.ToString());
@@ -52,6 +52,8 @@ namespace Poligoni
                 MessageBox.Show("Nije moguce da folder nema ime");
                 return;
             }
+            folder = $"{folder}.txt";
+            if (Directory.Exists(folder)) return;
             StreamReader sr = new StreamReader(folder);
             while (true)
             {
@@ -62,6 +64,9 @@ namespace Poligoni
                 float y = float.Parse(temp2[1]);
                 points.Add(new Point(x, y));
             }
+
+            Canvas canvas = new Canvas(this);
+            canvas.DrawPolygon(points);
         }
     }
 }

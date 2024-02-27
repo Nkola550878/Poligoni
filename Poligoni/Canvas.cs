@@ -17,7 +17,10 @@ namespace Poligoni
         int scale = 20;
 
         Graphics graphics;
-        int pointSize = 20;
+        int pointSize = 10;
+        int edgeWidth = 3;
+
+        Color coordianteSystemColor = Color.FromArgb(100, 100, 100);
 
         public Canvas(Form l_form)
         {
@@ -28,11 +31,13 @@ namespace Poligoni
             centerX = sizeX / 2;
             centerY = sizeY / 2;
             form = l_form;
+
+            graphics = form.CreateGraphics();
+            DrawCoordinateSystem();
         }
 
         public void DrawPolygon(List<Point> points)
         {
-            graphics = form.CreateGraphics();
             //graphics.DrawRectangle(new Pen(Color.Red, 10), 0, 0, 100, 100);
             for (int i = 0; i < points.Count; i++)
             {
@@ -53,9 +58,17 @@ namespace Poligoni
 
         void DrawEdge(Point p1, Point p2)
         {
-            Pen edgePen = new Pen(Color.Blue, 5);
+            Pen edgePen = new Pen(Color.Blue, edgeWidth);
 
             graphics.DrawLine(edgePen, centerX + p1.X * scale, centerY + p1.Y * scale, centerX + p2.X * scale, centerY + p2.Y * scale);
+        }
+
+        void DrawCoordinateSystem()
+        {
+            Pen coordinateSystemPen = new Pen(coordianteSystemColor);
+
+            graphics.DrawLine(coordinateSystemPen, centerX, 0, centerX, 2 * sizeY);
+            graphics.DrawLine(coordinateSystemPen, 0, centerY, 2 * centerX, centerY);
         }
     }
 }

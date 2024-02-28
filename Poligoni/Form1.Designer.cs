@@ -34,6 +34,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.tbFolder = new System.Windows.Forms.TextBox();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.Convex = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -56,7 +58,7 @@
             this.btnAddPoint.Name = "btnAddPoint";
             this.btnAddPoint.Size = new System.Drawing.Size(75, 23);
             this.btnAddPoint.TabIndex = 2;
-            this.btnAddPoint.Text = "AddPoint";
+            this.btnAddPoint.Text = "Add point";
             this.btnAddPoint.UseVisualStyleBackColor = true;
             this.btnAddPoint.Click += new System.EventHandler(this.btnAddVertex_Click);
             // 
@@ -87,11 +89,33 @@
             this.tbFolder.Size = new System.Drawing.Size(100, 20);
             this.tbFolder.TabIndex = 3;
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(713, 67);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 7;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // Convex
+            // 
+            this.Convex.Location = new System.Drawing.Point(713, 96);
+            this.Convex.Name = "Convex";
+            this.Convex.Size = new System.Drawing.Size(75, 23);
+            this.Convex.TabIndex = 8;
+            this.Convex.Text = "Convex";
+            this.Convex.UseVisualStyleBackColor = true;
+            this.Convex.Click += new System.EventHandler(this.Convex_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Convex);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.tbFolder);
             this.Controls.Add(this.btnLoad);
             this.Controls.Add(this.btnSave);
@@ -114,6 +138,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TextBox tbFolder;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button Convex;
     }
 }
 

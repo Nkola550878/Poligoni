@@ -56,6 +56,7 @@ namespace Poligoni
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
+            vertices.Clear();
             string folder = tbFolder.Text;
             if (folder == "")
             {
@@ -81,6 +82,31 @@ namespace Poligoni
 
             canvasForOnSameWindow.DrawPolygon(vertices);
             canvasForSecondWindow.DrawPolygon(vertices);
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            vertices.Clear();
+            canvasForOnSameWindow.DrawPolygon(vertices);
+            canvasForSecondWindow.DrawPolygon(vertices);
+        }
+
+        private void Convex_Click(object sender, EventArgs e)
+        {
+            int n = 0;
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Vector v1 = new Vector(vertices[i], vertices[(i + 1) % vertices.Count]);
+                Vector v2 = new Vector(vertices[(i + 1) % vertices.Count], vertices[(i + 2) % vertices.Count]);
+
+                n += Vector.CrossProduct(v1.Centered, v2.Centered) > 0 ? 1 : -1;
+            }
+            if (Math.Abs(n) == vertices.Count)
+            {
+                MessageBox.Show("Mnogougao je konveksan");
+                return;
+            }
+            MessageBox.Show("Mnogougao nije konveksan");
         }
 
         Form canvasForm;

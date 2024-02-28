@@ -13,12 +13,19 @@ namespace Poligoni
 {
     public partial class Form1 : Form
     {
+        Canvas canvasForOnSameWindow = null;
         public Form1()
         {
             InitializeComponent();
+            CreateCanvas();
         }
 
         List<Vertex> vertices = new List<Vertex>();
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            canvasForOnSameWindow = new Canvas(this);
+        }
 
         private void btnAddVertex_Click(object sender, EventArgs e)
         {
@@ -53,7 +60,11 @@ namespace Poligoni
                 return;
             }
             folder = $"{folder}.txt";
-            if (Directory.Exists(folder)) return;
+            if (!File.Exists(folder))
+            {
+                MessageBox.Show("File ne postoji");
+                return;
+            }
             StreamReader sr = new StreamReader(folder);
             while (true)
             {
@@ -65,8 +76,23 @@ namespace Poligoni
                 vertices.Add(new Vertex(x, y));
             }
 
-            Canvas canvas = new Canvas(this);
-            canvas.DrawPolygon(vertices);
+            canvasForOnSameWindow.DrawPolygon(vertices);
+            canvasForSecondWindow.DrawPolygon(vertices);
+        }
+
+        Form canvasForm;
+        Canvas canvasForSecondWindow;
+        private void CreateCanvas()
+        {
+            canvasForm = new Form();
+            canvasForm.Show();
+            canvasForm.ClientSize = new Size(500, 500);
+            canvasForm.Paint += CanvasForm_Paint;
+        }
+
+        private void CanvasForm_Paint(object sender, PaintEventArgs e)
+        {
+            canvasForSecondWindow = new Canvas(canvasForm);
         }
     }
 }

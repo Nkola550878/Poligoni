@@ -33,6 +33,9 @@ namespace Poligoni
             float y = float.Parse(tbYInput.Text);
 
             vertices.Add(new Vertex(x, y));
+
+            canvasForOnSameWindow.DrawPolygon(vertices);
+            canvasForSecondWindow.DrawPolygon(vertices);
         }
 
         private void btnSave_Click(object sender, EventArgs e)

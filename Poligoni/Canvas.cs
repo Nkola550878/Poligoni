@@ -57,7 +57,7 @@ namespace Poligoni
         void DrawVertex(Vertex p)
         {
             Brush pointBrush = new SolidBrush(vertexColor);
-            Rectangle square = new Rectangle(centerX + (int)p.X * scale - vertexSize / 2, centerY - (int)p.Y * scale - vertexSize / 2, vertexSize, vertexSize);
+            Rectangle square = new Rectangle(centerX + (int)(p.X * scale - vertexSize / 2), centerY - (int)(p.Y * scale + vertexSize / 2), vertexSize, vertexSize);
             graphics.FillEllipse(pointBrush, square);
         }
 

@@ -36,6 +36,7 @@
             this.tbFolder = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.Convex = new System.Windows.Forms.Button();
+            this.Obim = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -58,7 +59,7 @@
             this.btnAddPoint.Name = "btnAddPoint";
             this.btnAddPoint.Size = new System.Drawing.Size(75, 23);
             this.btnAddPoint.TabIndex = 2;
-            this.btnAddPoint.Text = "Add point";
+            this.btnAddPoint.Text = "Dodaj tacku";
             this.btnAddPoint.UseVisualStyleBackColor = true;
             this.btnAddPoint.Click += new System.EventHandler(this.btnAddVertex_Click);
             // 
@@ -68,7 +69,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Sacuvaj";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -78,7 +79,7 @@
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 4;
-            this.btnLoad.Text = "Load";
+            this.btnLoad.Text = "Ucitaj";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
@@ -95,7 +96,7 @@
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 7;
-            this.btnClear.Text = "Clear";
+            this.btnClear.Text = "Ocisti";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -105,15 +106,26 @@
             this.Convex.Name = "Convex";
             this.Convex.Size = new System.Drawing.Size(75, 23);
             this.Convex.TabIndex = 8;
-            this.Convex.Text = "Convex";
+            this.Convex.Text = "Konveksan";
             this.Convex.UseVisualStyleBackColor = true;
             this.Convex.Click += new System.EventHandler(this.Convex_Click);
+            // 
+            // Obim
+            // 
+            this.Obim.Location = new System.Drawing.Point(713, 125);
+            this.Obim.Name = "Obim";
+            this.Obim.Size = new System.Drawing.Size(75, 23);
+            this.Obim.TabIndex = 9;
+            this.Obim.Text = "Obim";
+            this.Obim.UseVisualStyleBackColor = true;
+            this.Obim.Click += new System.EventHandler(this.Obim_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Obim);
             this.Controls.Add(this.Convex);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.tbFolder);
@@ -140,6 +152,7 @@
         private System.Windows.Forms.TextBox tbFolder;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button Convex;
+        private System.Windows.Forms.Button Obim;
     }
 }
 

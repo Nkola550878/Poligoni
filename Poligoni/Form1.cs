@@ -18,14 +18,14 @@ namespace Poligoni
             InitializeComponent();
         }
 
-        List<Point> points= new List<Point>();
+        List<Vertex> vertices = new List<Vertex>();
 
-        private void btnAddPoint_Click(object sender, EventArgs e)
+        private void btnAddVertex_Click(object sender, EventArgs e)
         {
             float x = float.Parse(tbXInput.Text);
             float y = float.Parse(tbYInput.Text);
 
-            points.Add(new Point(x, y));
+            vertices.Add(new Vertex(x, y));
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace Poligoni
                 return;
             }
             StreamWriter sw = new StreamWriter($"{folder}.txt");
-            foreach (Point p in points)
+            foreach (Vertex p in vertices)
             {
                 sw.WriteLine(p.ToString());
             }
@@ -62,11 +62,11 @@ namespace Poligoni
                 string[] temp2 = temp1.Split(' ');
                 float x = float.Parse(temp2[0]);
                 float y = float.Parse(temp2[1]);
-                points.Add(new Point(x, y));
+                vertices.Add(new Vertex(x, y));
             }
 
             Canvas canvas = new Canvas(this);
-            canvas.DrawPolygon(points);
+            canvas.DrawPolygon(vertices);
         }
     }
 }

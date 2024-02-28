@@ -58,7 +58,7 @@
             this.btnAddPoint.TabIndex = 2;
             this.btnAddPoint.Text = "AddPoint";
             this.btnAddPoint.UseVisualStyleBackColor = true;
-            this.btnAddPoint.Click += new System.EventHandler(this.btnAddPoint_Click);
+            this.btnAddPoint.Click += new System.EventHandler(this.btnAddVertex_Click);
             // 
             // btnSave
             // 

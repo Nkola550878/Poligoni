@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poligoni
 {
-    internal class Point
+    internal class Vertex
     {
         float x, y;
         public float X
@@ -35,7 +35,7 @@ namespace Poligoni
             }
         }
 
-        public Point(float l_x, float l_y)
+        public Vertex(float l_x, float l_y)
         {
             x = l_x;
             y = l_y;

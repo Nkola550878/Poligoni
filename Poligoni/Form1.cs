@@ -91,7 +91,7 @@ namespace Poligoni
             canvasForSecondWindow.DrawPolygon(vertices);
         }
 
-        private void Convex_Click(object sender, EventArgs e)
+        private void btnConvex_Click(object sender, EventArgs e)
         {
             int n = 0;
             for (int i = 0; i < vertices.Count; i++)
@@ -109,7 +109,7 @@ namespace Poligoni
             MessageBox.Show("Mnogougao nije konveksan");
         }
 
-        private void Obim_Click(object sender, EventArgs e)
+        private void btnPerimetar_Click(object sender, EventArgs e)
         {
             float obim = 0;
             for(int i = 0; i < vertices.Count; i++)
@@ -117,6 +117,17 @@ namespace Poligoni
                 obim += Vertex.Distance(vertices[i], vertices[(i + 1) % vertices.Count]);
             }
             MessageBox.Show(obim.ToString());
+        }
+
+        private void btnSurfaceArea_Click(object sender, EventArgs e)
+        {
+            float area = 0;
+            for(int i = 0; i < vertices.Count; i++)
+            {
+                area += vertices[i].X * vertices[(i + 1) % vertices.Count].Y - vertices[(i + 1) % vertices.Count].X * vertices[i].Y;
+            }
+            area = Math.Abs(area) / 2;
+            MessageBox.Show(area.ToString());
         }
 
         Form canvasForm;

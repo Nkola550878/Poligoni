@@ -35,8 +35,9 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.tbFolder = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
-            this.Convex = new System.Windows.Forms.Button();
-            this.Obim = new System.Windows.Forms.Button();
+            this.btnConvex = new System.Windows.Forms.Button();
+            this.btnPerimetar = new System.Windows.Forms.Button();
+            this.btnSurfaceArea = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -68,7 +69,7 @@
             this.btnSave.Location = new System.Drawing.Point(713, 415);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 5;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Sacuvaj";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -78,7 +79,7 @@
             this.btnLoad.Location = new System.Drawing.Point(713, 386);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 4;
+            this.btnLoad.TabIndex = 7;
             this.btnLoad.Text = "Ucitaj";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -88,45 +89,56 @@
             this.tbFolder.Location = new System.Drawing.Point(607, 388);
             this.tbFolder.Name = "tbFolder";
             this.tbFolder.Size = new System.Drawing.Size(100, 20);
-            this.tbFolder.TabIndex = 3;
+            this.tbFolder.TabIndex = 6;
             // 
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(713, 67);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 7;
+            this.btnClear.TabIndex = 3;
             this.btnClear.Text = "Ocisti";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // Convex
+            // btnConvex
             // 
-            this.Convex.Location = new System.Drawing.Point(713, 96);
-            this.Convex.Name = "Convex";
-            this.Convex.Size = new System.Drawing.Size(75, 23);
-            this.Convex.TabIndex = 8;
-            this.Convex.Text = "Konveksan";
-            this.Convex.UseVisualStyleBackColor = true;
-            this.Convex.Click += new System.EventHandler(this.Convex_Click);
+            this.btnConvex.Location = new System.Drawing.Point(713, 96);
+            this.btnConvex.Name = "btnConvex";
+            this.btnConvex.Size = new System.Drawing.Size(75, 23);
+            this.btnConvex.TabIndex = 4;
+            this.btnConvex.Text = "Konveksan";
+            this.btnConvex.UseVisualStyleBackColor = true;
+            this.btnConvex.Click += new System.EventHandler(this.btnConvex_Click);
             // 
-            // Obim
+            // btnPerimetar
             // 
-            this.Obim.Location = new System.Drawing.Point(713, 125);
-            this.Obim.Name = "Obim";
-            this.Obim.Size = new System.Drawing.Size(75, 23);
-            this.Obim.TabIndex = 9;
-            this.Obim.Text = "Obim";
-            this.Obim.UseVisualStyleBackColor = true;
-            this.Obim.Click += new System.EventHandler(this.Obim_Click);
+            this.btnPerimetar.Location = new System.Drawing.Point(713, 125);
+            this.btnPerimetar.Name = "btnPerimetar";
+            this.btnPerimetar.Size = new System.Drawing.Size(75, 23);
+            this.btnPerimetar.TabIndex = 5;
+            this.btnPerimetar.Text = "Obim";
+            this.btnPerimetar.UseVisualStyleBackColor = true;
+            this.btnPerimetar.Click += new System.EventHandler(this.btnPerimetar_Click);
+            // 
+            // btnSurfaceArea
+            // 
+            this.btnSurfaceArea.Location = new System.Drawing.Point(713, 154);
+            this.btnSurfaceArea.Name = "btnSurfaceArea";
+            this.btnSurfaceArea.Size = new System.Drawing.Size(75, 23);
+            this.btnSurfaceArea.TabIndex = 9;
+            this.btnSurfaceArea.Text = "Povrsina";
+            this.btnSurfaceArea.UseVisualStyleBackColor = true;
+            this.btnSurfaceArea.Click += new System.EventHandler(this.btnSurfaceArea_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.Obim);
-            this.Controls.Add(this.Convex);
+            this.Controls.Add(this.btnSurfaceArea);
+            this.Controls.Add(this.btnPerimetar);
+            this.Controls.Add(this.btnConvex);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.tbFolder);
             this.Controls.Add(this.btnLoad);
@@ -151,8 +163,9 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TextBox tbFolder;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button Convex;
-        private System.Windows.Forms.Button Obim;
+        private System.Windows.Forms.Button btnConvex;
+        private System.Windows.Forms.Button btnPerimetar;
+        private System.Windows.Forms.Button btnSurfaceArea;
     }
 }
 

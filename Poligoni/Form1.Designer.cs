@@ -69,7 +69,7 @@
             this.btnSave.Location = new System.Drawing.Point(713, 415);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 8;
+            this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Sacuvaj";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -79,7 +79,7 @@
             this.btnLoad.Location = new System.Drawing.Point(713, 386);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 7;
+            this.btnLoad.TabIndex = 8;
             this.btnLoad.Text = "Ucitaj";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -89,7 +89,7 @@
             this.tbFolder.Location = new System.Drawing.Point(607, 388);
             this.tbFolder.Name = "tbFolder";
             this.tbFolder.Size = new System.Drawing.Size(100, 20);
-            this.tbFolder.TabIndex = 6;
+            this.tbFolder.TabIndex = 7;
             // 
             // btnClear
             // 
@@ -126,7 +126,7 @@
             this.btnSurfaceArea.Location = new System.Drawing.Point(713, 154);
             this.btnSurfaceArea.Name = "btnSurfaceArea";
             this.btnSurfaceArea.Size = new System.Drawing.Size(75, 23);
-            this.btnSurfaceArea.TabIndex = 9;
+            this.btnSurfaceArea.TabIndex = 6;
             this.btnSurfaceArea.Text = "Povrsina";
             this.btnSurfaceArea.UseVisualStyleBackColor = true;
             this.btnSurfaceArea.Click += new System.EventHandler(this.btnSurfaceArea_Click);

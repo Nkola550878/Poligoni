@@ -23,7 +23,6 @@ namespace Poligoni
         Color edgeColor = Color.FromArgb(0, 0, 255);
         Color vertexColor = Color.FromArgb(255, 0, 0);
         Color coordianteSystemColor = Color.FromArgb(100, 100, 100);
-
         Color backgroundColor = Color.FromArgb(255, 255, 255);
 
         public Canvas(Form l_form)
@@ -40,17 +39,17 @@ namespace Poligoni
             DrawCoordinateSystem();
         }
 
-        public void DrawPolygon(List<Vertex> points)
+        public void DrawPolygon(Polygon p)
         {
             graphics.Clear(backgroundColor);
             DrawCoordinateSystem();
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < p.vertices.Count; i++)
             {
-                DrawEdge(points[i], points[(i + 1) % points.Count]);
+                DrawEdge(p.vertices[i], p.vertices[(i + 1) % p.vertices.Count]);
             }
-            for (int i = 0; i < points.Count; i++)
+            for (int i = 0; i < p.vertices.Count; i++)
             {
-                DrawVertex(points[i]);
+                DrawVertex(p.vertices[i]);
             }
         }
 

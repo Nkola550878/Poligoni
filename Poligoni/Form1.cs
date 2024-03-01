@@ -77,6 +77,11 @@ namespace Poligoni
             MessageBox.Show(polygon.SurfaceArea().ToString());
         }
 
+        private void btnIntersection_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(polygon.Intersection() ? "da" : "ne");
+        }
+
         Form canvasForm;
         Canvas canvasForSecondWindow;
         private void CreateCanvas()

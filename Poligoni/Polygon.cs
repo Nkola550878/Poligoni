@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,6 +111,26 @@ namespace Poligoni
                 sw.WriteLine(p.ToString());
             }
             sw.Close();
+        }
+
+        public bool Intersection()
+        {
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                for (int j = i + 1; j < vertices.Count; j++)
+                {
+                    if (Math.Abs(i - j % vertices.Count) == 1) continue;
+
+                    Vector a = new Vector(vertices[i], vertices[(i + 1) % vertices.Count]);
+                    Vector b = new Vector(vertices[j], vertices[(j + 1) % vertices.Count]);
+
+                    if (Vector.Intersection(a, b))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

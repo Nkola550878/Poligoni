@@ -42,6 +42,14 @@ namespace Poligoni
             y = l_y;
         }
 
+        public static Vertex Zero
+        {
+            get
+            {
+                return new Vertex(0f, 0f);
+            }
+        }
+
         public override string ToString()
         {
             return $"{x} {y}";

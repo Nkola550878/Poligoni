@@ -38,6 +38,7 @@
             this.btnConvex = new System.Windows.Forms.Button();
             this.btnPerimetar = new System.Windows.Forms.Button();
             this.btnSurfaceArea = new System.Windows.Forms.Button();
+            this.btnIntersection = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -131,11 +132,22 @@
             this.btnSurfaceArea.UseVisualStyleBackColor = true;
             this.btnSurfaceArea.Click += new System.EventHandler(this.btnSurfaceArea_Click);
             // 
+            // btnIntersection
+            // 
+            this.btnIntersection.Location = new System.Drawing.Point(713, 183);
+            this.btnIntersection.Name = "btnIntersection";
+            this.btnIntersection.Size = new System.Drawing.Size(75, 23);
+            this.btnIntersection.TabIndex = 10;
+            this.btnIntersection.Text = "Presek";
+            this.btnIntersection.UseVisualStyleBackColor = true;
+            this.btnIntersection.Click += new System.EventHandler(this.btnIntersection_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnIntersection);
             this.Controls.Add(this.btnSurfaceArea);
             this.Controls.Add(this.btnPerimetar);
             this.Controls.Add(this.btnConvex);
@@ -166,6 +178,7 @@
         private System.Windows.Forms.Button btnConvex;
         private System.Windows.Forms.Button btnPerimetar;
         private System.Windows.Forms.Button btnSurfaceArea;
+        private System.Windows.Forms.Button btnIntersection;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
@@ -131,6 +132,63 @@ namespace Poligoni
                 }
             }
             return false;
+        }
+
+        public Polygon ConvexHull()
+        {
+            if (vertices.Count == 0) return null;
+            Polygon convexHull = new Polygon();
+            Vertex extreme = vertices[0];
+
+            for (int i = 1; i < vertices.Count; i++)
+            {
+                if (vertices[i].X < extreme.X)
+                {
+                    extreme = vertices[i];
+                }
+                if (vertices[i].X == extreme.X && vertices[i].Y < extreme.Y)
+                {
+                    extreme = vertices[i];
+                }
+            }
+            Vertex current = extreme;
+
+            do
+            {
+                Vertex nextVertex = null;
+                float angle = float.PositiveInfinity;
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    if (vertices[i] == current) continue;
+
+                    Vector a = Vector.Right;
+                    if (convexHull.vertices.Count != 0) a = new Vector(current, convexHull.vertices.Last());
+                    Vector b = new Vector(current, vertices[i]);
+
+                    //MessageBox.Show(Vector.ArcCos(a, b).ToString());
+
+                    if(angle > Vector.ArcCos(a, b))
+                    {
+                        angle = Vector.ArcCos(a, b);
+                        nextVertex = vertices[i];
+                        MessageBox.Show(angle.ToString());
+                    }
+
+                    if(angle == Vector.ArcCos(a, b) && Vertex.Distance(vertices[i], current) > Vertex.Distance(nextVertex, current))
+                    {
+                        angle = Vector.ArcCos(a, b);
+                        nextVertex = vertices[i];
+                        MessageBox.Show(angle.ToString());
+                    }
+                }
+
+                convexHull.Add(current);
+                current = nextVertex;
+                MessageBox.Show(nextVertex.ToString());
+
+            } while (current != extreme);
+
+            return convexHull;
         }
     }
 }

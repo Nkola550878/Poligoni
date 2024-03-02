@@ -15,6 +15,7 @@ namespace Poligoni
     {
         Canvas canvasForOnSameWindow = null;
         Polygon polygon;
+        Color defaulEdgeColor = Color.Blue;
 
         public Form1()
         {
@@ -35,8 +36,8 @@ namespace Poligoni
 
             polygon.Add(new Vertex(x, y));
 
-            canvasForOnSameWindow.DrawPolygon(polygon);
-            canvasForSecondWindow.DrawPolygon(polygon);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -50,16 +51,16 @@ namespace Poligoni
             string folder = tbFolder.Text;
             polygon.Load(folder);
 
-            canvasForOnSameWindow.DrawPolygon(polygon);
-            canvasForSecondWindow.DrawPolygon(polygon);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             polygon.Clear();
 
-            canvasForOnSameWindow.DrawPolygon(polygon);
-            canvasForSecondWindow.DrawPolygon(polygon);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         private void btnConvex_Click(object sender, EventArgs e)
@@ -80,6 +81,12 @@ namespace Poligoni
         private void btnIntersection_Click(object sender, EventArgs e)
         {
             MessageBox.Show(polygon.Intersection() ? "da" : "ne");
+        }
+
+        private void ConvexHull_Click(object sender, EventArgs e)
+        {
+            Polygon convexHull = polygon.ConvexHull();
+            canvasForSecondWindow.DrawPolygon(convexHull, Color.Purple);
         }
 
         Form canvasForm;

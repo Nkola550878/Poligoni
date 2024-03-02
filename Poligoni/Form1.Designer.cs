@@ -39,6 +39,7 @@
             this.btnPerimetar = new System.Windows.Forms.Button();
             this.btnSurfaceArea = new System.Windows.Forms.Button();
             this.btnIntersection = new System.Windows.Forms.Button();
+            this.ConvexHull = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -142,11 +143,22 @@
             this.btnIntersection.UseVisualStyleBackColor = true;
             this.btnIntersection.Click += new System.EventHandler(this.btnIntersection_Click);
             // 
+            // ConvexHull
+            // 
+            this.ConvexHull.Location = new System.Drawing.Point(713, 212);
+            this.ConvexHull.Name = "ConvexHull";
+            this.ConvexHull.Size = new System.Drawing.Size(75, 23);
+            this.ConvexHull.TabIndex = 11;
+            this.ConvexHull.Text = "Omotac";
+            this.ConvexHull.UseVisualStyleBackColor = true;
+            this.ConvexHull.Click += new System.EventHandler(this.ConvexHull_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ConvexHull);
             this.Controls.Add(this.btnIntersection);
             this.Controls.Add(this.btnSurfaceArea);
             this.Controls.Add(this.btnPerimetar);
@@ -179,6 +191,7 @@
         private System.Windows.Forms.Button btnPerimetar;
         private System.Windows.Forms.Button btnSurfaceArea;
         private System.Windows.Forms.Button btnIntersection;
+        private System.Windows.Forms.Button ConvexHull;
     }
 }
 

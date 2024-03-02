@@ -39,13 +39,14 @@ namespace Poligoni
             DrawCoordinateSystem();
         }
 
-        public void DrawPolygon(Polygon p)
+        public void DrawPolygon(Polygon p, Color c)
         {
+            if (p.vertices.Count == 0) return;
             graphics.Clear(backgroundColor);
             DrawCoordinateSystem();
             for (int i = 0; i < p.vertices.Count; i++)
             {
-                DrawEdge(p.vertices[i], p.vertices[(i + 1) % p.vertices.Count]);
+                DrawEdge(p.vertices[i], p.vertices[(i + 1) % p.vertices.Count], c);
             }
             for (int i = 0; i < p.vertices.Count; i++)
             {
@@ -55,14 +56,14 @@ namespace Poligoni
 
         void DrawVertex(Vertex p)
         {
-            Brush pointBrush = new SolidBrush(vertexColor);
+            Brush pointBrush = new SolidBrush(Color.Red);
             Rectangle square = new Rectangle(centerX + (int)(p.X * scale - vertexSize / 2), centerY - (int)(p.Y * scale + vertexSize / 2), vertexSize, vertexSize);
             graphics.FillEllipse(pointBrush, square);
         }
 
-        void DrawEdge(Vertex v1, Vertex v2)
+        void DrawEdge(Vertex v1, Vertex v2, Color c)
         {
-            Pen edgePen = new Pen(edgeColor, edgeWidth);
+            Pen edgePen = new Pen(c, edgeWidth);
 
             graphics.DrawLine(edgePen, centerX + v1.X * scale, centerY - v1.Y * scale, centerX + v2.X * scale, centerY - v2.Y * scale);
         }

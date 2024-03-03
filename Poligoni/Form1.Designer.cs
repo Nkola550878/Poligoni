@@ -40,6 +40,9 @@
             this.btnSurfaceArea = new System.Windows.Forms.Button();
             this.btnIntersection = new System.Windows.Forms.Button();
             this.ConvexHull = new System.Windows.Forms.Button();
+            this.Inside = new System.Windows.Forms.Button();
+            this.InsideX = new System.Windows.Forms.TextBox();
+            this.InsideY = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -71,7 +74,7 @@
             this.btnSave.Location = new System.Drawing.Point(713, 415);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 9;
+            this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Sacuvaj";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -81,7 +84,7 @@
             this.btnLoad.Location = new System.Drawing.Point(713, 386);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 8;
+            this.btnLoad.TabIndex = 13;
             this.btnLoad.Text = "Ucitaj";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -91,7 +94,7 @@
             this.tbFolder.Location = new System.Drawing.Point(607, 388);
             this.tbFolder.Name = "tbFolder";
             this.tbFolder.Size = new System.Drawing.Size(100, 20);
-            this.tbFolder.TabIndex = 7;
+            this.tbFolder.TabIndex = 12;
             // 
             // btnClear
             // 
@@ -138,7 +141,7 @@
             this.btnIntersection.Location = new System.Drawing.Point(713, 183);
             this.btnIntersection.Name = "btnIntersection";
             this.btnIntersection.Size = new System.Drawing.Size(75, 23);
-            this.btnIntersection.TabIndex = 10;
+            this.btnIntersection.TabIndex = 7;
             this.btnIntersection.Text = "Presek";
             this.btnIntersection.UseVisualStyleBackColor = true;
             this.btnIntersection.Click += new System.EventHandler(this.btnIntersection_Click);
@@ -148,16 +151,43 @@
             this.ConvexHull.Location = new System.Drawing.Point(713, 212);
             this.ConvexHull.Name = "ConvexHull";
             this.ConvexHull.Size = new System.Drawing.Size(75, 23);
-            this.ConvexHull.TabIndex = 11;
+            this.ConvexHull.TabIndex = 8;
             this.ConvexHull.Text = "Omotac";
             this.ConvexHull.UseVisualStyleBackColor = true;
             this.ConvexHull.Click += new System.EventHandler(this.ConvexHull_Click);
+            // 
+            // Inside
+            // 
+            this.Inside.Location = new System.Drawing.Point(713, 241);
+            this.Inside.Name = "Inside";
+            this.Inside.Size = new System.Drawing.Size(75, 23);
+            this.Inside.TabIndex = 9;
+            this.Inside.Text = "Unutra";
+            this.Inside.UseVisualStyleBackColor = true;
+            this.Inside.Click += new System.EventHandler(this.Inside_Click);
+            // 
+            // InsideX
+            // 
+            this.InsideX.Location = new System.Drawing.Point(582, 270);
+            this.InsideX.Name = "InsideX";
+            this.InsideX.Size = new System.Drawing.Size(100, 20);
+            this.InsideX.TabIndex = 10;
+            // 
+            // InsideY
+            // 
+            this.InsideY.Location = new System.Drawing.Point(688, 270);
+            this.InsideY.Name = "InsideY";
+            this.InsideY.Size = new System.Drawing.Size(100, 20);
+            this.InsideY.TabIndex = 11;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.InsideY);
+            this.Controls.Add(this.InsideX);
+            this.Controls.Add(this.Inside);
             this.Controls.Add(this.ConvexHull);
             this.Controls.Add(this.btnIntersection);
             this.Controls.Add(this.btnSurfaceArea);
@@ -192,6 +222,9 @@
         private System.Windows.Forms.Button btnSurfaceArea;
         private System.Windows.Forms.Button btnIntersection;
         private System.Windows.Forms.Button ConvexHull;
+        private System.Windows.Forms.Button Inside;
+        private System.Windows.Forms.TextBox InsideX;
+        private System.Windows.Forms.TextBox InsideY;
     }
 }
 

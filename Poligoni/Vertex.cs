@@ -50,6 +50,19 @@ namespace Poligoni
             }
         }
 
+        public static bool operator ==(Vertex v1, Vertex v2)
+        {
+            if(v1.X == v2.X && v1.Y == v2.Y)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool operator !=(Vertex v1, Vertex v2)
+        {
+            return !(v1 == v2);
+        }
+
         public override string ToString()
         {
             return $"{x} {y}";

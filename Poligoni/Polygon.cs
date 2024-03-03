@@ -125,7 +125,7 @@ namespace Poligoni
                     Vector a = new Vector(vertices[i], vertices[(i + 1) % vertices.Count]);
                     Vector b = new Vector(vertices[j], vertices[(j + 1) % vertices.Count]);
 
-                    if (Vector.Intersection(a, b))
+                    if (Vector.Intersect(a, b))
                     {
                         return true;
                     }
@@ -134,10 +134,8 @@ namespace Poligoni
             return false;
         }
 
-        public Polygon ConvexHull()
+        public Vertex Extreme()
         {
-            if (vertices.Count == 0) return null;
-            Polygon convexHull = new Polygon();
             Vertex extreme = vertices[0];
 
             for (int i = 1; i < vertices.Count; i++)
@@ -151,6 +149,14 @@ namespace Poligoni
                     extreme = vertices[i];
                 }
             }
+            return extreme;
+        }
+
+        public Polygon ConvexHull()
+        {
+            if (vertices.Count == 0) return null;
+            Polygon convexHull = new Polygon();
+            Vertex extreme = Extreme();
             Vertex current = extreme;
 
             do
@@ -165,30 +171,59 @@ namespace Poligoni
                     if (convexHull.vertices.Count != 0) a = new Vector(current, convexHull.vertices.Last());
                     Vector b = new Vector(current, vertices[i]);
 
-                    //MessageBox.Show(Vector.ArcCos(a, b).ToString());
-
                     if(angle > Vector.ArcCos(a, b))
                     {
                         angle = Vector.ArcCos(a, b);
                         nextVertex = vertices[i];
-                        MessageBox.Show(angle.ToString());
                     }
 
                     if(angle == Vector.ArcCos(a, b) && Vertex.Distance(vertices[i], current) > Vertex.Distance(nextVertex, current))
                     {
                         angle = Vector.ArcCos(a, b);
                         nextVertex = vertices[i];
-                        MessageBox.Show(angle.ToString());
                     }
                 }
 
                 convexHull.Add(current);
                 current = nextVertex;
-                MessageBox.Show(nextVertex.ToString());
 
             } while (current != extreme);
 
             return convexHull;
+        }
+
+        public bool Inside(Vertex pointToCheck)
+        {
+            bool inside = false;
+            Vector vLeft = pointToCheck + Vector.Right * (Extreme().X - pointToCheck.X + Math.Sign(Extreme().X - pointToCheck.X));
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Vertex previousVertex = vertices[(i - 1 + vertices.Count) % vertices.Count];
+                Vertex currentVertex = vertices[i];
+                Vertex nextVertex = vertices[(i + 1) % vertices.Count];
+
+                Vector currentEdge = new Vector(currentVertex, nextVertex);
+                if (Vector.Intersect(vLeft, currentEdge))
+                {
+                    inside = !inside;
+                    MessageBox.Show(i.ToString());
+                }
+
+                if (Vector.CrossProduct(vLeft, new Vector(pointToCheck, currentVertex)) == 0 && (currentVertex.X - vLeft.start.X) * (currentVertex.X - vLeft.end.X) < 0)
+                {
+                    bool oppositeSide = Vector.OppositeSide(new Vector(pointToCheck, currentVertex), previousVertex, nextVertex) > 0;
+                    inside = oppositeSide ? !inside : inside;
+                    
+                    if(Vector.CrossProduct(vLeft, new Vector(pointToCheck, nextVertex)) == 0 && (nextVertex.X - vLeft.start.X) * (nextVertex.X - vLeft.end.X) < 0)
+                    {
+                        oppositeSide = Vector.OppositeSide(new Vector(pointToCheck, currentVertex), previousVertex, vertices[(i + 2) % vertices.Count]) > 0;
+                        inside = oppositeSide ? !inside : inside;
+                    }
+                }
+
+            }
+            return inside;
         }
     }
 }

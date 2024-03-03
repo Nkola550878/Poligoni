@@ -103,5 +103,14 @@ namespace Poligoni
         {
             canvasForSecondWindow = new Canvas(canvasForm);
         }
+
+        private void Inside_Click(object sender, EventArgs e)
+        {
+            float x = float.Parse(InsideX.Text);
+            float y = float.Parse(InsideY.Text);
+            Vertex v = new Vertex(x, y);
+
+            MessageBox.Show(polygon.Inside(v).ToString());
+        }
     }
 }

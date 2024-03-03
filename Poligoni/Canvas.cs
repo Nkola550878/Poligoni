@@ -75,5 +75,10 @@ namespace Poligoni
             graphics.DrawLine(coordinateSystemPen, centerX, 0, centerX, 2 * sizeY);
             graphics.DrawLine(coordinateSystemPen, 0, centerY, 2 * centerX, centerY);
         }
+
+        public void Clear()
+        {
+            graphics.Clear(backgroundColor);
+        }
     }
 }

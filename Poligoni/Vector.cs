@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,8 +11,8 @@ namespace Poligoni
 {
     internal class Vector
     {
-        Vertex start;
-        Vertex end;
+        public Vertex start;
+        public Vertex end;
 
         Vertex centered;
         float distance;
@@ -39,6 +40,16 @@ namespace Poligoni
 
             centered = end - start;
             distance = Vertex.Distance(start, end);
+        }
+
+        public static Vector operator *(Vector v, float f)
+        {
+            return new Vector(0, 0, v.centered.X * f, v.centered.Y * f);
+        }
+
+        public static Vector operator +(Vertex vertex, Vector vector)
+        {
+            return new Vector(vector.start.X + vertex.X, vector.start.Y + vertex.Y, vector.end.X + vertex.X, vector.end.Y + vertex.Y);
         }
 
         public Vector(float l_x1, float l_y1, float l_x2, float l_y2)
@@ -70,17 +81,46 @@ namespace Poligoni
             return (v1.end - v1.start).X * (v2.end - v2.start).Y - (v1.end - v1.start).Y * (v2.end - v2.start).X;
         }
 
-        public static bool Intersection(Vector v1, Vector v2)
+        public static int OppositeSide(Vector v, Vertex v1, Vertex v2)
         {
-            Vector tempStart1 = new Vector(v1.start, v2.start);
-            Vector tempEnd1 = new Vector(v1.start, v2.end);
-            bool suprotnaStrana1 = CrossProduct(tempStart1, v1) * CrossProduct(v1, tempEnd1) >= 0;
+            Vector temp1 = new Vector(v.start, v1);
+            Vector temp2 = new Vector(v.start, v2);
+            float crossProduct1 = CrossProduct(temp1, v);
+            float crossProduct2 = CrossProduct(v, temp2);
+            float crossProduct = crossProduct1 * crossProduct2;
+            if (crossProduct < 0) return 0;
+            if (crossProduct > 0) return 1;
+            if (crossProduct1 != 0 || crossProduct2 != 0) return -1;
+            return -2;
+        }
 
-            Vector tempStart2 = new Vector(v2.start, v1.start);
-            Vector tempEnd2 = new Vector(v2.start, v1.end);
-            bool suprotnaStrana2 = CrossProduct(tempStart2, v2) * CrossProduct(v2, tempEnd2) >= 0;
+        public static bool Intersect(Vector v1, Vector v2)
+        {
+            int oppositeSide1 = OppositeSide(v1, v2.start, v2.end);
+            int oppositeSide2 = OppositeSide(v2, v1.start, v1.end);
 
-            return suprotnaStrana1 && suprotnaStrana2;
+            if(oppositeSide1 * oppositeSide2 == 0)
+            {
+                return false;
+            }
+            if(oppositeSide1 + oppositeSide2 == 0)
+            {
+                return true;
+            }
+            if(oppositeSide1 + oppositeSide2 == -4)
+            {
+                if (v1.start == v2.start || v1.start == v2.end || v1.end == v2.start || v1.end == v2.end)
+                {
+                    return true;
+                }
+                if ((v1.start.X - v2.start.X) * (v1.start.X - v2.end.X) > 0) 
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            return true;
         }
 
         public static float Cos(Vector v1, Vector v2)

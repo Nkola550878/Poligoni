@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,19 +12,20 @@ namespace Poligoni
     internal class Canvas
     {
         int sizeX, sizeY;
-        int centerX, centerY;
+        static int centerX, centerY;
 
         Form form;
-        int scale = 100;
+        float scale = 100;
 
         Graphics graphics;
-        int vertexSize = 10;
+        static int vertexSize = 10;
         int edgeWidth = 3;
 
         Color edgeColor = Color.FromArgb(0, 0, 255);
         Color vertexColor = Color.FromArgb(255, 0, 0);
         Color coordianteSystemColor = Color.FromArgb(100, 100, 100);
         Color backgroundColor = Color.FromArgb(255, 255, 255);
+        Color vertexInsideCheckColor = Color.FromArgb(255, 165, 0);
 
         public Canvas(Form l_form)
         {
@@ -42,7 +44,6 @@ namespace Poligoni
         public void DrawPolygon(Polygon p, Color c)
         {
             if (p.vertices.Count == 0) return;
-            graphics.Clear(backgroundColor);
             DrawCoordinateSystem();
             for (int i = 0; i < p.vertices.Count; i++)
             {
@@ -50,13 +51,13 @@ namespace Poligoni
             }
             for (int i = 0; i < p.vertices.Count; i++)
             {
-                DrawVertex(p.vertices[i]);
+                DrawVertex(p.vertices[i], vertexColor);
             }
         }
 
-        void DrawVertex(Vertex p)
+        public void DrawVertex(Vertex p, Color c)
         {
-            Brush pointBrush = new SolidBrush(Color.Red);
+            Brush pointBrush = new SolidBrush(c);
             Rectangle square = new Rectangle(centerX + (int)(p.X * scale - vertexSize / 2), centerY - (int)(p.Y * scale + vertexSize / 2), vertexSize, vertexSize);
             graphics.FillEllipse(pointBrush, square);
         }
@@ -79,6 +80,16 @@ namespace Poligoni
         public void Clear()
         {
             graphics.Clear(backgroundColor);
+        }
+
+        //public Vertex ToCoordinateSystem(Vertex vertex)
+        //{
+        //    return new Vertex(centerX + (int)(vertex.X * scale - vertexSize / 2), centerY - (int)(vertex.Y * scale + vertexSize / 2));
+        //}
+
+        public void Zoom(float amount)
+        {
+            scale = scale * (float)Math.Pow(1.1f, -Math.Sign(amount));
         }
     }
 }

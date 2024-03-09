@@ -207,7 +207,7 @@ namespace Poligoni
                 if (Vector.Intersect(vLeft, currentEdge))
                 {
                     inside = !inside;
-                    MessageBox.Show(i.ToString());
+                    //MessageBox.Show(i.ToString());
                 }
 
                 if (Vector.CrossProduct(vLeft, new Vector(pointToCheck, currentVertex)) == 0 && (currentVertex.X - vLeft.start.X) * (currentVertex.X - vLeft.end.X) < 0)

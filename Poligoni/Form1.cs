@@ -22,6 +22,7 @@ namespace Poligoni
             InitializeComponent();
             CreateCanvas();
             polygon = new Polygon();
+            this.MouseWheel += Form1_MouseWheel;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -36,6 +37,8 @@ namespace Poligoni
 
             polygon.Add(new Vertex(x, y));
 
+            canvasForOnSameWindow.Clear();
+            canvasForSecondWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
             canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
@@ -51,6 +54,8 @@ namespace Poligoni
             string folder = tbFolder.Text;
             polygon.Load(folder);
 
+            canvasForOnSameWindow.Clear();
+            canvasForSecondWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
             canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
@@ -59,8 +64,8 @@ namespace Poligoni
         {
             polygon.Clear();
 
-            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
+            canvasForOnSameWindow.Clear();
+            canvasForSecondWindow.Clear();
         }
 
         private void btnConvex_Click(object sender, EventArgs e)
@@ -86,7 +91,16 @@ namespace Poligoni
         private void ConvexHull_Click(object sender, EventArgs e)
         {
             Polygon convexHull = polygon.ConvexHull();
+            canvasForOnSameWindow.DrawPolygon(convexHull, Color.Purple);
             canvasForSecondWindow.DrawPolygon(convexHull, Color.Purple);
+        }
+
+        private void Form1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int delta = e.Delta;
+            canvasForOnSameWindow.Zoom(delta);
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         Form canvasForm;
@@ -106,11 +120,24 @@ namespace Poligoni
 
         private void Inside_Click(object sender, EventArgs e)
         {
+
             float x = float.Parse(InsideX.Text);
             float y = float.Parse(InsideY.Text);
+
             Vertex v = new Vertex(x, y);
 
+            canvasForOnSameWindow.DrawVertex(v, Color.Orange);
+            canvasForSecondWindow.DrawVertex(v, Color.Orange);
+
             MessageBox.Show(polygon.Inside(v).ToString());
+        }
+
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Point screenPos = MousePosition;
+            Point clientPos = PointToClient(screenPos);
+
+            MessageBox.Show(clientPos.ToString());
         }
     }
 }

@@ -16,18 +16,24 @@ namespace Poligoni
         Canvas canvasForOnSameWindow = null;
         Polygon polygon;
         Color defaulEdgeColor = Color.Blue;
+        Vertex inside;
+
+        int moving;
 
         public Form1()
         {
             InitializeComponent();
             CreateCanvas();
             polygon = new Polygon();
-            this.MouseWheel += Form1_MouseWheel;
+            MouseWheel += Form1_MouseWheel;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            canvasForOnSameWindow = new Canvas(this);
+            if(canvasForOnSameWindow == null)
+            {
+                canvasForOnSameWindow = new Canvas(this);
+            }
         }
 
         private void btnAddVertex_Click(object sender, EventArgs e)
@@ -101,30 +107,54 @@ namespace Poligoni
             canvasForOnSameWindow.Zoom(delta);
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            if (inside != null)
+            {
+                canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            }
         }
 
-        Form canvasForm;
-        Canvas canvasForSecondWindow;
-        private void CreateCanvas()
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            canvasForm = new Form();
-            canvasForm.Show();
-            canvasForm.ClientSize = new Size(500, 500);
-            canvasForm.Paint += CanvasForm_Paint;
-        }
+            Point positionOfScreen = MousePosition;
+            Point positionOfMouse = PointToClient(positionOfScreen);
+            Vertex mousePosition = new Vertex(positionOfMouse.X, positionOfMouse.Y);
 
-        private void CanvasForm_Paint(object sender, PaintEventArgs e)
-        {
-            canvasForSecondWindow = new Canvas(canvasForm);
+            MessageBox.Show(canvasForOnSameWindow.ScreenToWorldPoint(mousePosition).ToString());
+            Vertex mousePositionWorldSpace = canvasForOnSameWindow.ScreenToWorldPoint(mousePosition);
+            int index = 0;
+            Vertex closest = polygon.vertices[index];
+
+            if(polygon.vertices.Count > 0)
+            {
+                for (int i = 0; i < polygon.vertices.Count; i++)
+                {
+                    if (Vertex.Distance(polygon.vertices[i], mousePositionWorldSpace) < Vertex.Distance(polygon.vertices[index], mousePositionWorldSpace))
+                    {
+                        index = i;
+                    }
+                }
+                closest = polygon.vertices[index];
+            }
+            if(Vertex.Distance(inside, mousePositionWorldSpace) < Vertex.Distance(closest, mousePositionWorldSpace))
+            {
+                index = -1;
+                closest = inside;
+            }
+            if(Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvasForOnSameWindow.scale)
+            {
+                MessageBox.Show(index.ToString());
+            }
+
+            moving = index;
         }
 
         private void Inside_Click(object sender, EventArgs e)
         {
-
             float x = float.Parse(InsideX.Text);
             float y = float.Parse(InsideY.Text);
 
             Vertex v = new Vertex(x, y);
+            inside = v;
 
             canvasForOnSameWindow.DrawVertex(v, Color.Orange);
             canvasForSecondWindow.DrawVertex(v, Color.Orange);
@@ -132,12 +162,38 @@ namespace Poligoni
             MessageBox.Show(polygon.Inside(v).ToString());
         }
 
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
-        {
-            Point screenPos = MousePosition;
-            Point clientPos = PointToClient(screenPos);
+        Form canvasForm;
+        Canvas canvasForSecondWindow;
+        bool createdSecondWindow = false;
 
-            MessageBox.Show(clientPos.ToString());
+        private void CreateCanvas()
+        {
+            canvasForm = new Form();
+            canvasForm.Show();
+            canvasForm.ClientSize = new Size(500, 500);
+            canvasForm.Paint += CanvasForm_Paint;
+            canvasForm.MouseWheel += CanvasForm_MouseWheel;
+        }
+
+        private void CanvasForm_Paint(object sender, PaintEventArgs e)
+        {
+            if(canvasForSecondWindow == null)
+            {
+                canvasForSecondWindow = new Canvas(canvasForm);
+            }
+        }
+
+
+        private void CanvasForm_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int delta = e.Delta;
+            canvasForSecondWindow.Zoom(delta);
+            canvasForSecondWindow.Clear();
+            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
+            if(inside != null)
+            {
+                canvasForSecondWindow.DrawVertex(inside, Color.Orange);
+            }
         }
     }
 }

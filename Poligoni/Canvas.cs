@@ -12,13 +12,13 @@ namespace Poligoni
     internal class Canvas
     {
         int sizeX, sizeY;
-        static int centerX, centerY;
+        int centerX, centerY;
 
         Form form;
-        float scale = 100;
+        public float scale;
 
         Graphics graphics;
-        static int vertexSize = 10;
+        public static int vertexSize = 10;
         int edgeWidth = 3;
 
         Color edgeColor = Color.FromArgb(0, 0, 255);
@@ -36,9 +36,24 @@ namespace Poligoni
             centerX = sizeX / 2;
             centerY = sizeY / 2;
             form = l_form;
+            scale = 100;
 
             graphics = form.CreateGraphics();
             DrawCoordinateSystem();
+        }
+
+        public Vertex WorldToScreenPoint(Vertex v)
+        {
+            float x = centerX + v.X * scale;
+            float y = centerY - v.Y * scale;
+            return new Vertex(x, y);
+        }
+
+        public Vertex ScreenToWorldPoint(Vertex v)
+        {
+            float x = (v.X - centerX) / scale;
+            float y = (centerY - v.Y) / scale;
+            return new Vertex(x, y);
         }
 
         public void DrawPolygon(Polygon p, Color c)
@@ -58,7 +73,7 @@ namespace Poligoni
         public void DrawVertex(Vertex p, Color c)
         {
             Brush pointBrush = new SolidBrush(c);
-            Rectangle square = new Rectangle(centerX + (int)(p.X * scale - vertexSize / 2), centerY - (int)(p.Y * scale + vertexSize / 2), vertexSize, vertexSize);
+            Rectangle square = new Rectangle((int)WorldToScreenPoint(p).X - vertexSize / 2, (int)WorldToScreenPoint(p).Y - vertexSize / 2, vertexSize, vertexSize);
             graphics.FillEllipse(pointBrush, square);
         }
 
@@ -66,15 +81,15 @@ namespace Poligoni
         {
             Pen edgePen = new Pen(c, edgeWidth);
 
-            graphics.DrawLine(edgePen, centerX + v1.X * scale, centerY - v1.Y * scale, centerX + v2.X * scale, centerY - v2.Y * scale);
+            graphics.DrawLine(edgePen, WorldToScreenPoint(v1).X, WorldToScreenPoint(v1).Y, WorldToScreenPoint(v2).X, WorldToScreenPoint(v2).Y);
         }
 
         public void DrawCoordinateSystem()
         {
             Pen coordinateSystemPen = new Pen(coordianteSystemColor);
 
-            graphics.DrawLine(coordinateSystemPen, centerX, 0, centerX, 2 * sizeY);
-            graphics.DrawLine(coordinateSystemPen, 0, centerY, 2 * centerX, centerY);
+            graphics.DrawLine(coordinateSystemPen, centerX, 0, centerX, sizeY);
+            graphics.DrawLine(coordinateSystemPen, 0, centerY, sizeX, centerY);
         }
 
         public void Clear()
@@ -89,7 +104,7 @@ namespace Poligoni
 
         public void Zoom(float amount)
         {
-            scale = scale * (float)Math.Pow(1.1f, -Math.Sign(amount));
+            scale *= (float)Math.Pow(1.1f, -Math.Sign(amount));
         }
     }
 }

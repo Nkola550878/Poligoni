@@ -52,6 +52,8 @@ namespace Poligoni
 
         public static bool operator ==(Vertex v1, Vertex v2)
         {
+            if (v1 is null && v2 is null) return true;
+            if ((v1 is null && !(v2 is null)) || !((v1 is null) && v2 is null)) return false;
             if(v1.X == v2.X && v1.Y == v2.Y)
             {
                 return true;

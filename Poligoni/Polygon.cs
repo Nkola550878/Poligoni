@@ -120,7 +120,7 @@ namespace Poligoni
             {
                 for (int j = i + 1; j < vertices.Count; j++)
                 {
-                    if (Math.Abs(i - j % vertices.Count) == 1) continue;
+                    if (Math.Abs((i - j) % vertices.Count) == 1 || Math.Abs((i - j) % vertices.Count) == vertices.Count - 1) continue;
 
                     Vector a = new Vector(vertices[i], vertices[(i + 1) % vertices.Count]);
                     Vector b = new Vector(vertices[j], vertices[(j + 1) % vertices.Count]);

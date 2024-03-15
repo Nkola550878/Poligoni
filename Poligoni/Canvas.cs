@@ -14,7 +14,7 @@ namespace Poligoni
         int sizeX, sizeY;
         int centerX, centerY;
 
-        Form form;
+        public Form form;
         public float scale;
 
         Graphics graphics;
@@ -95,6 +95,7 @@ namespace Poligoni
         public void Clear()
         {
             graphics.Clear(backgroundColor);
+            DrawCoordinateSystem();
         }
 
         //public Vertex ToCoordinateSystem(Vertex vertex)

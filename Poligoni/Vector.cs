@@ -113,7 +113,11 @@ namespace Poligoni
                 {
                     return true;
                 }
-                if ((v1.start.X - v2.start.X) * (v1.start.X - v2.end.X) > 0) 
+                if (Math.Max(v1.start.X, v1.end.X) < Math.Min(v2.start.X, v2.end.X) || Math.Max(v2.start.X, v2.end.X) < Math.Min(v1.start.X, v1.end.X))
+                {
+                    return false;
+                }
+                if (Math.Max(v1.start.Y, v1.end.Y) < Math.Min(v2.start.Y, v2.end.Y) || Math.Max(v2.start.Y, v2.end.Y) < Math.Min(v1.start.Y, v1.end.Y))
                 {
                     return false;
                 }

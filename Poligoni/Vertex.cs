@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -42,6 +43,12 @@ namespace Poligoni
             y = l_y;
         }
 
+        public Vertex(Point l_p)
+        {
+            x = l_p.X;
+            y = l_p.Y;
+        }
+
         public static Vertex Zero
         {
             get
@@ -53,7 +60,7 @@ namespace Poligoni
         public static bool operator ==(Vertex v1, Vertex v2)
         {
             if (v1 is null && v2 is null) return true;
-            if ((v1 is null && !(v2 is null)) || !((v1 is null) && v2 is null)) return false;
+            if ((v1 is null && !(v2 is null)) || (!(v1 is null) && v2 is null)) return false;
             if(v1.X == v2.X && v1.Y == v2.Y)
             {
                 return true;

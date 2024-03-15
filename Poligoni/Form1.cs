@@ -17,8 +17,9 @@ namespace Poligoni
         Polygon polygon;
         Color defaulEdgeColor = Color.Blue;
         Vertex inside;
+        Vertex mousePosition;
 
-        int moving;
+        int moving = -2;
 
         public Form1()
         {
@@ -113,19 +114,21 @@ namespace Poligoni
             }
         }
 
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        #region moving verteces
+
+        private void Select(Canvas canvas)
         {
             Point positionOfScreen = MousePosition;
-            Point positionOfMouse = PointToClient(positionOfScreen);
+            Point positionOfMouse = canvas.form.PointToClient(positionOfScreen);
             Vertex mousePosition = new Vertex(positionOfMouse.X, positionOfMouse.Y);
 
-            MessageBox.Show(canvasForOnSameWindow.ScreenToWorldPoint(mousePosition).ToString());
-            Vertex mousePositionWorldSpace = canvasForOnSameWindow.ScreenToWorldPoint(mousePosition);
+            Vertex mousePositionWorldSpace = canvas.ScreenToWorldPoint(mousePosition);
             int index = 0;
-            Vertex closest = polygon.vertices[index];
+            Vertex closest = null;
 
-            if(polygon.vertices.Count > 0)
+            if (polygon.vertices.Count > 0)
             {
+                closest = polygon.vertices[index];
                 for (int i = 0; i < polygon.vertices.Count; i++)
                 {
                     if (Vertex.Distance(polygon.vertices[i], mousePositionWorldSpace) < Vertex.Distance(polygon.vertices[index], mousePositionWorldSpace))
@@ -135,18 +138,29 @@ namespace Poligoni
                 }
                 closest = polygon.vertices[index];
             }
-            if(Vertex.Distance(inside, mousePositionWorldSpace) < Vertex.Distance(closest, mousePositionWorldSpace))
+            if(inside != null && closest != null)
             {
-                index = -1;
-                closest = inside;
+                if (Vertex.Distance(inside, mousePositionWorldSpace) < Vertex.Distance(closest, mousePositionWorldSpace))
+                {
+                    index = -1;
+                    closest = inside;
+                }
             }
-            if(Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvasForOnSameWindow.scale)
+            if (Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvas.scale)
             {
                 MessageBox.Show(index.ToString());
             }
 
             moving = index;
+            //MessageBox.Show(moving.ToString());
         }
+
+        void Deselect()
+        {
+            moving = -2;
+        }
+
+        #endregion
 
         private void Inside_Click(object sender, EventArgs e)
         {
@@ -160,6 +174,39 @@ namespace Poligoni
             canvasForSecondWindow.DrawVertex(v, Color.Orange);
 
             MessageBox.Show(polygon.Inside(v).ToString());
+        }
+
+        //private void Form1_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    Vertex currentMousePosition = new Vertex(PointToClient(MousePosition));
+        //    //MessageBox.Show($"{mousePosition}, {currentMousePosition}");
+        //    //MessageBox.Show((mousePosition == currentMousePosition).ToString());
+        //    if(mousePosition == currentMousePosition)
+        //    {
+        //        return;
+        //    }
+        //    mousePosition = currentMousePosition;
+        //    if (moving == -2) return;
+        //    //MessageBox.Show(moving.ToString());
+        //    if (moving == -1)
+        //    {
+        //        MessageBox.Show("moving inside point");
+        //        inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
+        //    }
+
+        //    canvasForOnSameWindow.Clear();
+        //    if(inside != null) canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+        //    canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+        //}
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Select(canvasForOnSameWindow);
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            Deselect();
         }
 
         Form canvasForm;
@@ -195,5 +242,6 @@ namespace Poligoni
                 canvasForSecondWindow.DrawVertex(inside, Color.Orange);
             }
         }
+
     }
 }

@@ -152,7 +152,6 @@ namespace Poligoni
             }
 
             moving = index;
-            //MessageBox.Show(moving.ToString());
         }
 
         void Deselect()
@@ -161,6 +160,20 @@ namespace Poligoni
         }
 
         #endregion
+
+        public static float Clamp(float value, float min, float max)
+        {
+            if (min > max) throw new MinGreaterThanMaxException();
+            if(value < min)
+            {
+                return min;
+            }
+            if(value > max)
+            {
+                return max;
+            }
+            return value;
+        }
 
         private void Inside_Click(object sender, EventArgs e)
         {
@@ -179,28 +192,34 @@ namespace Poligoni
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
             Vertex currentMousePosition = new Vertex(PointToClient(MousePosition));
-            //MessageBox.Show($"{mousePosition}, {currentMousePosition}");
-            //MessageBox.Show((mousePosition == currentMousePosition).ToString());
             if (mousePosition == currentMousePosition)
             {
                 return;
             }
             mousePosition = currentMousePosition;
-            //MessageBox.Show(moving.ToString());
             if (moving == -2) return;
             if (moving == -1)
             {
-                //MessageBox.Show("moving inside point");
-                inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
+                Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
+                inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
+                //inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
+                //inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
             }
             if(moving >= 0)
             {
-                polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
+                Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
+                polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(v);
+                //polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
             }
 
             canvasForOnSameWindow.Clear();
             if (inside != null) canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+        }
+
+        private void Move()
+        {
+
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)

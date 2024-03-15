@@ -148,7 +148,7 @@ namespace Poligoni
             }
             if (Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvas.scale)
             {
-                MessageBox.Show(index.ToString());
+                //MessageBox.Show(index.ToString());
             }
 
             moving = index;
@@ -176,32 +176,37 @@ namespace Poligoni
             MessageBox.Show(polygon.Inside(v).ToString());
         }
 
-        //private void Form1_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    Vertex currentMousePosition = new Vertex(PointToClient(MousePosition));
-        //    //MessageBox.Show($"{mousePosition}, {currentMousePosition}");
-        //    //MessageBox.Show((mousePosition == currentMousePosition).ToString());
-        //    if(mousePosition == currentMousePosition)
-        //    {
-        //        return;
-        //    }
-        //    mousePosition = currentMousePosition;
-        //    if (moving == -2) return;
-        //    //MessageBox.Show(moving.ToString());
-        //    if (moving == -1)
-        //    {
-        //        MessageBox.Show("moving inside point");
-        //        inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
-        //    }
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            Vertex currentMousePosition = new Vertex(PointToClient(MousePosition));
+            //MessageBox.Show($"{mousePosition}, {currentMousePosition}");
+            //MessageBox.Show((mousePosition == currentMousePosition).ToString());
+            if (mousePosition == currentMousePosition)
+            {
+                return;
+            }
+            mousePosition = currentMousePosition;
+            //MessageBox.Show(moving.ToString());
+            if (moving == -2) return;
+            if (moving == -1)
+            {
+                //MessageBox.Show("moving inside point");
+                inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
+            }
+            if(moving >= 0)
+            {
+                polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
+            }
 
-        //    canvasForOnSameWindow.Clear();
-        //    if(inside != null) canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
-        //    canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-        //}
+            canvasForOnSameWindow.Clear();
+            if (inside != null) canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+        }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            Select(canvasForOnSameWindow);
+            if(PointToClient(MousePosition).X < ClientSize.Height)
+                Select(canvasForOnSameWindow);
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
@@ -242,6 +247,5 @@ namespace Poligoni
                 canvasForSecondWindow.DrawVertex(inside, Color.Orange);
             }
         }
-
     }
 }

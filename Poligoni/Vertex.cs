@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Poligoni
 {
@@ -61,6 +62,7 @@ namespace Poligoni
         {
             if (v1 is null && v2 is null) return true;
             if ((v1 is null && !(v2 is null)) || (!(v1 is null) && v2 is null)) return false;
+            //MessageBox.Show((v1.X == v2.X && v1.Y == v2.Y).ToString());
             if(v1.X == v2.X && v1.Y == v2.Y)
             {
                 return true;
@@ -84,6 +86,7 @@ namespace Poligoni
 
         public static float Distance(Vertex a1, Vertex a2)
         {
+            if (a1 == null || a2 == null) return float.PositiveInfinity;
             return (float)Math.Sqrt(Math.Pow(a1.x - a2.x, 2) + Math.Pow(a1.y - a2.y, 2));
         }
     }

@@ -24,7 +24,6 @@ namespace Poligoni
         public Form1()
         {
             InitializeComponent();
-            CreateCanvas();
             polygon = new Polygon();
             MouseWheel += Form1_MouseWheel;
         }
@@ -37,6 +36,9 @@ namespace Poligoni
             }
         }
 
+
+        #region Buttons
+
         private void btnAddVertex_Click(object sender, EventArgs e)
         {
             float x = float.Parse(tbXInput.Text);
@@ -45,9 +47,7 @@ namespace Poligoni
             polygon.Add(new Vertex(x, y));
 
             canvasForOnSameWindow.Clear();
-            canvasForSecondWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -62,9 +62,7 @@ namespace Poligoni
             polygon.Load(folder);
 
             canvasForOnSameWindow.Clear();
-            canvasForSecondWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -72,7 +70,6 @@ namespace Poligoni
             polygon.Clear();
 
             canvasForOnSameWindow.Clear();
-            canvasForSecondWindow.Clear();
         }
 
         private void btnConvex_Click(object sender, EventArgs e)
@@ -99,22 +96,24 @@ namespace Poligoni
         {
             Polygon convexHull = polygon.ConvexHull();
             canvasForOnSameWindow.DrawPolygon(convexHull, Color.Purple);
-            canvasForSecondWindow.DrawPolygon(convexHull, Color.Purple);
         }
 
-        private void Form1_MouseWheel(object sender, MouseEventArgs e)
+        private void Inside_Click(object sender, EventArgs e)
         {
-            int delta = e.Delta;
-            canvasForOnSameWindow.Zoom(delta);
-            canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            if (inside != null)
-            {
-                canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
-            }
+            float x = float.Parse(InsideX.Text);
+            float y = float.Parse(InsideY.Text);
+
+            Vertex v = new Vertex(x, y);
+            inside = v;
+
+            canvasForOnSameWindow.DrawVertex(v, Color.Orange);
+
+            MessageBox.Show(polygon.Inside(v).ToString());
         }
 
-        #region moving verteces
+        #endregion
+
+        #region Moving verteces
 
         private void Select(Canvas canvas)
         {
@@ -148,45 +147,9 @@ namespace Poligoni
             }
             if (Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvas.scale)
             {
-                //MessageBox.Show(index.ToString());
+                moving = index;
             }
 
-            moving = index;
-        }
-
-        void Deselect()
-        {
-            moving = -2;
-        }
-
-        #endregion
-
-        public static float Clamp(float value, float min, float max)
-        {
-            if (min > max) throw new MinGreaterThanMaxException();
-            if(value < min)
-            {
-                return min;
-            }
-            if(value > max)
-            {
-                return max;
-            }
-            return value;
-        }
-
-        private void Inside_Click(object sender, EventArgs e)
-        {
-            float x = float.Parse(InsideX.Text);
-            float y = float.Parse(InsideY.Text);
-
-            Vertex v = new Vertex(x, y);
-            inside = v;
-
-            canvasForOnSameWindow.DrawVertex(v, Color.Orange);
-            canvasForSecondWindow.DrawVertex(v, Color.Orange);
-
-            MessageBox.Show(polygon.Inside(v).ToString());
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -202,14 +165,11 @@ namespace Poligoni
             {
                 Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
                 inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
-                //inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
-                //inside = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
             }
             if(moving >= 0)
             {
                 Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
                 polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(v);
-                //polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(currentMousePosition);
             }
 
             canvasForOnSameWindow.Clear();
@@ -217,9 +177,37 @@ namespace Poligoni
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
         }
 
-        private void Move()
+        void Deselect()
         {
+            moving = -2;
+        }
 
+        #endregion
+
+        private void Form1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int delta = e.Delta;
+            canvasForOnSameWindow.Zoom(delta);
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            if (inside != null)
+            {
+                canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            }
+        }
+
+        public static float Clamp(float value, float min, float max)
+        {
+            if (min > max) throw new MinGreaterThanMaxException();
+            if(value < min)
+            {
+                return min;
+            }
+            if(value > max)
+            {
+                return max;
+            }
+            return value;
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -231,40 +219,6 @@ namespace Poligoni
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             Deselect();
-        }
-
-        Form canvasForm;
-        Canvas canvasForSecondWindow;
-        bool createdSecondWindow = false;
-
-        private void CreateCanvas()
-        {
-            canvasForm = new Form();
-            canvasForm.Show();
-            canvasForm.ClientSize = new Size(500, 500);
-            canvasForm.Paint += CanvasForm_Paint;
-            canvasForm.MouseWheel += CanvasForm_MouseWheel;
-        }
-
-        private void CanvasForm_Paint(object sender, PaintEventArgs e)
-        {
-            if(canvasForSecondWindow == null)
-            {
-                canvasForSecondWindow = new Canvas(canvasForm);
-            }
-        }
-
-
-        private void CanvasForm_MouseWheel(object sender, MouseEventArgs e)
-        {
-            int delta = e.Delta;
-            canvasForSecondWindow.Zoom(delta);
-            canvasForSecondWindow.Clear();
-            canvasForSecondWindow.DrawPolygon(polygon, defaulEdgeColor);
-            if(inside != null)
-            {
-                canvasForSecondWindow.DrawVertex(inside, Color.Orange);
-            }
         }
     }
 }

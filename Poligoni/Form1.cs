@@ -87,6 +87,11 @@ namespace Poligoni
             MessageBox.Show(polygon.Perimetar().ToString());
         }
 
+        private void btnIntersection_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(polygon.Intersection() ? "da" : "ne");
+        }
+
         private void btnSurfaceArea_Click(object sender, EventArgs e)
         {
             MessageBox.Show(polygon.SurfaceArea().ToString());
@@ -231,7 +236,7 @@ namespace Poligoni
 
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
         }
 
         private void tbYInput_TextChanged(object sender, EventArgs e)
@@ -243,7 +248,7 @@ namespace Poligoni
 
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
         }
 
         private void InsideX_TextChanged(object sender, EventArgs e)
@@ -255,7 +260,7 @@ namespace Poligoni
 
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
         }
 
         private void InsideY_TextChanged(object sender, EventArgs e)
@@ -267,7 +272,7 @@ namespace Poligoni
 
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
         }
     }
 }

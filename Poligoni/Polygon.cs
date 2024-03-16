@@ -37,6 +37,11 @@ namespace Poligoni
 
         public float SurfaceArea()
         {
+            if (Intersection())
+            {
+                MessageBox.Show("poligon nije prost");
+                return 0;
+            }
             float area = 0;
             for (int i = 0; i < vertices.Count; i++)
             {

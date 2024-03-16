@@ -145,6 +145,7 @@
             this.btnIntersection.TabIndex = 7;
             this.btnIntersection.Text = "Presek";
             this.btnIntersection.UseVisualStyleBackColor = true;
+            this.btnIntersection.Click += new System.EventHandler(this.btnIntersection_Click);
             // 
             // ConvexHull
             // 

@@ -18,6 +18,7 @@ namespace Poligoni
         Color defaulEdgeColor = Color.Blue;
         Vertex inside;
         Vertex mousePosition;
+        bool mouseDown;
 
         int moving = -2;
 
@@ -26,6 +27,7 @@ namespace Poligoni
             InitializeComponent();
             polygon = new Polygon();
             MouseWheel += Form1_MouseWheel;
+            inside = new Vertex(0, 0);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -62,6 +64,7 @@ namespace Poligoni
             polygon.Load(folder);
 
             canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
         }
 
@@ -87,28 +90,10 @@ namespace Poligoni
             MessageBox.Show(polygon.SurfaceArea().ToString());
         }
 
-        private void btnIntersection_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(polygon.Intersection() ? "da" : "ne");
-        }
-
         private void ConvexHull_Click(object sender, EventArgs e)
         {
             Polygon convexHull = polygon.ConvexHull();
             canvasForOnSameWindow.DrawPolygon(convexHull, Color.Purple);
-        }
-
-        private void Inside_Click(object sender, EventArgs e)
-        {
-            float x = float.Parse(InsideX.Text);
-            float y = float.Parse(InsideY.Text);
-
-            Vertex v = new Vertex(x, y);
-            inside = v;
-
-            canvasForOnSameWindow.DrawVertex(v, Color.Orange);
-
-            MessageBox.Show(polygon.Inside(v).ToString());
         }
 
         #endregion
@@ -137,7 +122,7 @@ namespace Poligoni
                 }
                 closest = polygon.vertices[index];
             }
-            if(inside != null && closest != null)
+            if(closest != null)
             {
                 if (Vertex.Distance(inside, mousePositionWorldSpace) < Vertex.Distance(closest, mousePositionWorldSpace))
                 {
@@ -148,12 +133,16 @@ namespace Poligoni
             if (Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvas.scale)
             {
                 moving = index;
+                return;
             }
-
+            tbXInput.Text = "";
+            tbYInput.Text = "";
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
+
+            if (!mouseDown) return;
             Vertex currentMousePosition = new Vertex(PointToClient(MousePosition));
             if (mousePosition == currentMousePosition)
             {
@@ -165,21 +154,26 @@ namespace Poligoni
             {
                 Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
                 inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
+                InsideX.Text = inside.X.ToString();
+                InsideY.Text = inside.Y.ToString();
+                
             }
             if(moving >= 0)
             {
                 Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
                 polygon.vertices[moving] = canvasForOnSameWindow.ScreenToWorldPoint(v);
+                tbXInput.Text = polygon.vertices[moving].X.ToString();
+                tbYInput.Text = polygon.vertices[moving].Y.ToString();
             }
 
             canvasForOnSameWindow.Clear();
-            if (inside != null) canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
             canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
         }
 
         void Deselect()
         {
-            moving = -2;
+            mouseDown = false;
         }
 
         #endregion
@@ -190,10 +184,7 @@ namespace Poligoni
             canvasForOnSameWindow.Zoom(delta);
             canvasForOnSameWindow.Clear();
             canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            if (inside != null)
-            {
-                canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
-            }
+            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
         }
 
         public static float Clamp(float value, float min, float max)
@@ -213,12 +204,63 @@ namespace Poligoni
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if(PointToClient(MousePosition).X < ClientSize.Height)
+            {
                 Select(canvasForOnSameWindow);
+                mouseDown = true;
+            }
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             Deselect();
+        }
+
+        private void tbXInput_TextChanged(object sender, EventArgs e)
+        {
+            if (mouseDown) return;
+            if (moving < 0) return;
+            if (tbXInput.Text == "" || tbXInput.Text == "-") polygon.vertices[moving].X = 0;
+            else polygon.vertices[moving].X = float.Parse(tbXInput.Text);
+
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+        }
+
+        private void tbYInput_TextChanged(object sender, EventArgs e)
+        {
+            if (mouseDown) return;
+            if (moving < 0) return;
+            if(tbYInput.Text == "" || tbYInput.Text == "-") polygon.vertices[moving].Y = 0;
+            else polygon.vertices[moving].Y = float.Parse(tbYInput.Text);
+
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+        }
+
+        private void InsideX_TextChanged(object sender, EventArgs e)
+        {
+            if (mouseDown) return;
+            if (moving >= 0 || moving == -2) return;
+            if (InsideX.Text == "" || InsideX.Text == "-") inside.X = 0;
+            else inside.X = float.Parse(InsideX.Text);
+
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+        }
+
+        private void InsideY_TextChanged(object sender, EventArgs e)
+        {
+            if (mouseDown) return;
+            if (moving >= 0 || moving == -2) return;
+            if (InsideY.Text == "" || InsideY.Text == "-") inside.Y = 0;
+            else inside.Y = float.Parse(InsideY.Text);
+
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
         }
     }
 }

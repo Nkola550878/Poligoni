@@ -195,6 +195,7 @@ namespace Poligoni
         public bool Inside(Vertex pointToCheck)
         {
             bool inside = false;
+            if (pointToCheck.X < Extreme().X) return false;
             Vector vLeft = pointToCheck + Vector.Right * (Extreme().X - pointToCheck.X + Math.Sign(Extreme().X - pointToCheck.X));
 
             for (int i = 0; i < vertices.Count; i++)
@@ -220,7 +221,6 @@ namespace Poligoni
                         inside = oppositeSide ? !inside : inside;
                     }
                 }
-
             }
             return inside;
         }

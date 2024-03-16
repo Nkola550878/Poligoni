@@ -40,7 +40,6 @@
             this.btnSurfaceArea = new System.Windows.Forms.Button();
             this.btnIntersection = new System.Windows.Forms.Button();
             this.ConvexHull = new System.Windows.Forms.Button();
-            this.Inside = new System.Windows.Forms.Button();
             this.InsideX = new System.Windows.Forms.TextBox();
             this.InsideY = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -51,6 +50,7 @@
             this.tbYInput.Name = "tbYInput";
             this.tbYInput.Size = new System.Drawing.Size(100, 20);
             this.tbYInput.TabIndex = 1;
+            this.tbYInput.TextChanged += new System.EventHandler(this.tbYInput_TextChanged);
             // 
             // tbXInput
             // 
@@ -58,6 +58,7 @@
             this.tbXInput.Name = "tbXInput";
             this.tbXInput.Size = new System.Drawing.Size(100, 20);
             this.tbXInput.TabIndex = 0;
+            this.tbXInput.TextChanged += new System.EventHandler(this.tbXInput_TextChanged);
             // 
             // btnAddPoint
             // 
@@ -144,7 +145,6 @@
             this.btnIntersection.TabIndex = 7;
             this.btnIntersection.Text = "Presek";
             this.btnIntersection.UseVisualStyleBackColor = true;
-            this.btnIntersection.Click += new System.EventHandler(this.btnIntersection_Click);
             // 
             // ConvexHull
             // 
@@ -156,29 +156,21 @@
             this.ConvexHull.UseVisualStyleBackColor = true;
             this.ConvexHull.Click += new System.EventHandler(this.ConvexHull_Click);
             // 
-            // Inside
-            // 
-            this.Inside.Location = new System.Drawing.Point(713, 241);
-            this.Inside.Name = "Inside";
-            this.Inside.Size = new System.Drawing.Size(75, 23);
-            this.Inside.TabIndex = 9;
-            this.Inside.Text = "Unutra";
-            this.Inside.UseVisualStyleBackColor = true;
-            this.Inside.Click += new System.EventHandler(this.Inside_Click);
-            // 
             // InsideX
             // 
-            this.InsideX.Location = new System.Drawing.Point(582, 270);
+            this.InsideX.Location = new System.Drawing.Point(582, 241);
             this.InsideX.Name = "InsideX";
             this.InsideX.Size = new System.Drawing.Size(100, 20);
             this.InsideX.TabIndex = 10;
+            this.InsideX.TextChanged += new System.EventHandler(this.InsideX_TextChanged);
             // 
             // InsideY
             // 
-            this.InsideY.Location = new System.Drawing.Point(688, 270);
+            this.InsideY.Location = new System.Drawing.Point(688, 241);
             this.InsideY.Name = "InsideY";
             this.InsideY.Size = new System.Drawing.Size(100, 20);
             this.InsideY.TabIndex = 11;
+            this.InsideY.TextChanged += new System.EventHandler(this.InsideY_TextChanged);
             // 
             // Form1
             // 
@@ -187,7 +179,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.InsideY);
             this.Controls.Add(this.InsideX);
-            this.Controls.Add(this.Inside);
             this.Controls.Add(this.ConvexHull);
             this.Controls.Add(this.btnIntersection);
             this.Controls.Add(this.btnSurfaceArea);
@@ -225,7 +216,6 @@
         private System.Windows.Forms.Button btnSurfaceArea;
         private System.Windows.Forms.Button btnIntersection;
         private System.Windows.Forms.Button ConvexHull;
-        private System.Windows.Forms.Button Inside;
         private System.Windows.Forms.TextBox InsideX;
         private System.Windows.Forms.TextBox InsideY;
     }

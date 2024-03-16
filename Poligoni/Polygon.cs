@@ -136,6 +136,10 @@ namespace Poligoni
 
         public Vertex Extreme()
         {
+            if(vertices.Count == 0)
+            {
+                return new Vertex(0, 0);
+            }
             Vertex extreme = vertices[0];
 
             for (int i = 1; i < vertices.Count; i++)

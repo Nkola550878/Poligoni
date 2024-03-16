@@ -35,6 +35,7 @@ namespace Poligoni
             if(canvasForOnSameWindow == null)
             {
                 canvasForOnSameWindow = new Canvas(this);
+                canvasForOnSameWindow.DrawVertex(inside, Color.Red);
             }
         }
 
@@ -73,6 +74,7 @@ namespace Poligoni
             polygon.Clear();
 
             canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawVertex(inside, Color.Red);
         }
 
         private void btnConvex_Click(object sender, EventArgs e)
@@ -129,6 +131,11 @@ namespace Poligoni
                     index = -1;
                     closest = inside;
                 }
+            }
+            if(closest == null)
+            {
+                index = -1;
+                closest = inside;
             }
             if (Vertex.Distance(closest, mousePositionWorldSpace) < Canvas.vertexSize / canvas.scale)
             {

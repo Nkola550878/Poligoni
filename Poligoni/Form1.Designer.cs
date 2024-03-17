@@ -40,8 +40,7 @@
             this.btnSurfaceArea = new System.Windows.Forms.Button();
             this.btnIntersection = new System.Windows.Forms.Button();
             this.ConvexHull = new System.Windows.Forms.Button();
-            this.InsideX = new System.Windows.Forms.TextBox();
-            this.InsideY = new System.Windows.Forms.TextBox();
+            this.DeleteVertex = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbYInput
@@ -99,7 +98,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(713, 67);
+            this.btnClear.Location = new System.Drawing.Point(713, 96);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 3;
@@ -109,7 +108,7 @@
             // 
             // btnConvex
             // 
-            this.btnConvex.Location = new System.Drawing.Point(713, 96);
+            this.btnConvex.Location = new System.Drawing.Point(713, 125);
             this.btnConvex.Name = "btnConvex";
             this.btnConvex.Size = new System.Drawing.Size(75, 23);
             this.btnConvex.TabIndex = 4;
@@ -119,7 +118,7 @@
             // 
             // btnPerimetar
             // 
-            this.btnPerimetar.Location = new System.Drawing.Point(713, 125);
+            this.btnPerimetar.Location = new System.Drawing.Point(713, 154);
             this.btnPerimetar.Name = "btnPerimetar";
             this.btnPerimetar.Size = new System.Drawing.Size(75, 23);
             this.btnPerimetar.TabIndex = 5;
@@ -129,7 +128,7 @@
             // 
             // btnSurfaceArea
             // 
-            this.btnSurfaceArea.Location = new System.Drawing.Point(713, 154);
+            this.btnSurfaceArea.Location = new System.Drawing.Point(713, 183);
             this.btnSurfaceArea.Name = "btnSurfaceArea";
             this.btnSurfaceArea.Size = new System.Drawing.Size(75, 23);
             this.btnSurfaceArea.TabIndex = 6;
@@ -139,7 +138,7 @@
             // 
             // btnIntersection
             // 
-            this.btnIntersection.Location = new System.Drawing.Point(713, 183);
+            this.btnIntersection.Location = new System.Drawing.Point(713, 212);
             this.btnIntersection.Name = "btnIntersection";
             this.btnIntersection.Size = new System.Drawing.Size(75, 23);
             this.btnIntersection.TabIndex = 7;
@@ -149,7 +148,7 @@
             // 
             // ConvexHull
             // 
-            this.ConvexHull.Location = new System.Drawing.Point(713, 212);
+            this.ConvexHull.Location = new System.Drawing.Point(713, 241);
             this.ConvexHull.Name = "ConvexHull";
             this.ConvexHull.Size = new System.Drawing.Size(75, 23);
             this.ConvexHull.TabIndex = 8;
@@ -157,29 +156,22 @@
             this.ConvexHull.UseVisualStyleBackColor = true;
             this.ConvexHull.Click += new System.EventHandler(this.ConvexHull_Click);
             // 
-            // InsideX
+            // DeleteVertex
             // 
-            this.InsideX.Location = new System.Drawing.Point(582, 241);
-            this.InsideX.Name = "InsideX";
-            this.InsideX.Size = new System.Drawing.Size(100, 20);
-            this.InsideX.TabIndex = 10;
-            this.InsideX.TextChanged += new System.EventHandler(this.InsideX_TextChanged);
-            // 
-            // InsideY
-            // 
-            this.InsideY.Location = new System.Drawing.Point(688, 241);
-            this.InsideY.Name = "InsideY";
-            this.InsideY.Size = new System.Drawing.Size(100, 20);
-            this.InsideY.TabIndex = 11;
-            this.InsideY.TextChanged += new System.EventHandler(this.InsideY_TextChanged);
+            this.DeleteVertex.Location = new System.Drawing.Point(713, 67);
+            this.DeleteVertex.Name = "DeleteVertex";
+            this.DeleteVertex.Size = new System.Drawing.Size(75, 23);
+            this.DeleteVertex.TabIndex = 15;
+            this.DeleteVertex.Text = "Obrisi tacku";
+            this.DeleteVertex.UseVisualStyleBackColor = true;
+            this.DeleteVertex.Click += new System.EventHandler(this.DeleteVertex_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.InsideY);
-            this.Controls.Add(this.InsideX);
+            this.Controls.Add(this.DeleteVertex);
             this.Controls.Add(this.ConvexHull);
             this.Controls.Add(this.btnIntersection);
             this.Controls.Add(this.btnSurfaceArea);
@@ -217,8 +209,7 @@
         private System.Windows.Forms.Button btnSurfaceArea;
         private System.Windows.Forms.Button btnIntersection;
         private System.Windows.Forms.Button ConvexHull;
-        private System.Windows.Forms.TextBox InsideX;
-        private System.Windows.Forms.TextBox InsideY;
+        private System.Windows.Forms.Button DeleteVertex;
     }
 }
 

@@ -13,13 +13,17 @@ namespace Poligoni
 {
     public partial class Form1 : Form
     {
+        Color defaultColor = Color.Blue;
+        Color hullColor = Color.Purple;
+
+        Color insideColor = Color.Green;
+        Color outsideColor = Color.Red;
+
         Canvas canvasForOnSameWindow = null;
         Polygon polygon;
-        Color defaulEdgeColor = Color.Blue;
         Vertex inside;
         Vertex mousePosition;
         bool mouseDown;
-
         int moving = -2;
 
         public Form1()
@@ -35,7 +39,7 @@ namespace Poligoni
             if(canvasForOnSameWindow == null)
             {
                 canvasForOnSameWindow = new Canvas(this);
-                canvasForOnSameWindow.DrawVertex(inside, Color.Red);
+                canvasForOnSameWindow.DrawVertex(inside, outsideColor);
             }
         }
 
@@ -50,7 +54,9 @@ namespace Poligoni
             polygon.Add(new Vertex(x, y));
 
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -65,8 +71,8 @@ namespace Poligoni
             polygon.Load(folder);
 
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
-            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -100,7 +106,7 @@ namespace Poligoni
         private void ConvexHull_Click(object sender, EventArgs e)
         {
             Polygon convexHull = polygon.ConvexHull();
-            canvasForOnSameWindow.DrawPolygon(convexHull, Color.Purple);
+            canvasForOnSameWindow.DrawPolygon(convexHull, hullColor);
         }
 
         #endregion
@@ -147,6 +153,7 @@ namespace Poligoni
                 moving = index;
                 return;
             }
+            moving = -2;
             tbXInput.Text = "";
             tbYInput.Text = "";
         }
@@ -166,8 +173,8 @@ namespace Poligoni
             {
                 Vertex v = new Vertex(Clamp(mousePosition.X, 0, ClientSize.Height), Clamp(mousePosition.Y, 0, ClientSize.Height));
                 inside = canvasForOnSameWindow.ScreenToWorldPoint(v);
-                InsideX.Text = inside.X.ToString();
-                InsideY.Text = inside.Y.ToString();
+                tbXInput.Text = inside.X.ToString();
+                tbYInput.Text = inside.Y.ToString();
                 
             }
             if(moving >= 0)
@@ -179,8 +186,8 @@ namespace Poligoni
             }
 
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
-            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
         }
 
         void Deselect()
@@ -195,8 +202,8 @@ namespace Poligoni
             int delta = e.Delta;
             canvasForOnSameWindow.Zoom(delta);
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, defaulEdgeColor);
-            canvasForOnSameWindow.DrawVertex(inside, Color.Orange);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
         }
 
         public static float Clamp(float value, float min, float max)
@@ -235,44 +242,30 @@ namespace Poligoni
             else polygon.vertices[moving].X = float.Parse(tbXInput.Text);
 
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
         }
 
         private void tbYInput_TextChanged(object sender, EventArgs e)
         {
             if (mouseDown) return;
+            if (moving == -2) return;
+            if(moving >= 0) polygon.vertices[moving].Y = (tbYInput.Text == "" || tbYInput.Text == "-") ? 0 : float.Parse(tbYInput.Text);
+            if (moving == -1) inside.Y = (tbYInput.Text == "" || tbYInput.Text == "-") ? 0 : float.Parse(tbYInput.Text);
+
+            canvasForOnSameWindow.Clear();
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
+        }
+
+        private void DeleteVertex_Click(object sender, EventArgs e)
+        {
             if (moving < 0) return;
-            if(tbYInput.Text == "" || tbYInput.Text == "-") polygon.vertices[moving].Y = 0;
-            else polygon.vertices[moving].Y = float.Parse(tbYInput.Text);
+            polygon.vertices.Remove(polygon.vertices[moving]);
 
             canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
-        }
-
-        private void InsideX_TextChanged(object sender, EventArgs e)
-        {
-            if (mouseDown) return;
-            if (moving >= 0 || moving == -2) return;
-            if (InsideX.Text == "" || InsideX.Text == "-") inside.X = 0;
-            else inside.X = float.Parse(InsideX.Text);
-
-            canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
-        }
-
-        private void InsideY_TextChanged(object sender, EventArgs e)
-        {
-            if (mouseDown) return;
-            if (moving >= 0 || moving == -2) return;
-            if (InsideY.Text == "" || InsideY.Text == "-") inside.Y = 0;
-            else inside.Y = float.Parse(InsideY.Text);
-
-            canvasForOnSameWindow.Clear();
-            canvasForOnSameWindow.DrawPolygon(polygon, Color.Blue);
-            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? Color.Green : Color.Red);
+            canvasForOnSameWindow.DrawPolygon(polygon, defaultColor);
+            canvasForOnSameWindow.DrawVertex(inside, polygon.Inside(inside) ? insideColor : outsideColor);
         }
     }
 }
